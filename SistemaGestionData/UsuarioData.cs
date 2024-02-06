@@ -17,7 +17,7 @@ namespace SistemaGestionData
         {
             List<Usuario> list = new List<Usuario>();
 
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "SELECT * FROM Usuario where id = @id ";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
