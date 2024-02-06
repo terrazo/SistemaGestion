@@ -17,7 +17,7 @@ namespace SistemaGestionData
         {
             List<Venta> list = new List<Venta>();
 
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "SELECT * FROM Venta where id = @id ";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
