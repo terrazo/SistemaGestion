@@ -9,44 +9,42 @@ namespace WebApiSistemaGestion.service
     public class ProductoVendidoService
     {
 
+        private CoderContext context;
 
-
-
-        public static List<ProductoVendido> GetAllProductosVendidos()
+        public ProductoVendidoService(CoderContext coderContext)
         {
-            using (CoderContext context = new CoderContext())
-            {
+            this.context = coderContext;
+        }
+
+
+        public   List<ProductoVendido> GetAllProductosVendidos()
+        {
                 return context.ProductoVendidos.ToList();
-            }
         }
 
 
 
-        public static List<ProductoVendido> ObtenerTodosLosProductosVendidos()
+        public   List<ProductoVendido> ObtenerTodosLosProductosVendidos()
         {
-            using (CoderContext context = new CoderContext())
-            {
-
+         
                 List<ProductoVendido> v = context.ProductoVendidos.ToList();
 
                 return v;
 
-            }
         }
 
-        public static ProductoVendido ObtenerProductoVendidoPorId(int id)
+        public   ProductoVendido ObtenerProductoVendidoPorId(int id)
         {
-            using (CoderContext context = new CoderContext())
-            {
+       
 
                 ProductoVendido? pvbuscado = context.ProductoVendidos.Where(pv => pv.Id == id).FirstOrDefault();
+
                 return pvbuscado;
-            }
         }
 
-        public static ProductoVendido ObtenerProductoVendidoPorId2(int id)
+        public   ProductoVendido ObtenerProductoVendidoPorId2(int id)
         {
-            List<ProductoVendido> v = ProductoVendidoService.ObtenerTodosLosProductosVendidos();
+            List<ProductoVendido> v = ObtenerTodosLosProductosVendidos();
 
             foreach (ProductoVendido item in v)
             {
@@ -58,23 +56,16 @@ namespace WebApiSistemaGestion.service
             return null;
         }
 
-        public static bool AgregarProductoVendido(ProductoVendido v)
+        public   bool AgregarProductoVendido(ProductoVendido v)
         {
-            using (CoderContext context = new CoderContext())
-            {
                 context.ProductoVendidos.Add(v);
 
                 context.SaveChanges();
                 return true;
-            }
-
-
         }
 
-        public static bool ActualizarProductoVendidoPorId(ProductoVendido v, int id)
+        public   bool ActualizarProductoVendidoPorId(ProductoVendido v, int id)
         {
-            using (CoderContext context = new CoderContext())
-            {
                 ProductoVendido? vBuscado = context.ProductoVendidos.Where(v => v.Id == id).FirstOrDefault();
 
 
@@ -88,14 +79,11 @@ namespace WebApiSistemaGestion.service
                 context.SaveChanges();
 
                 return true;
-            }
         }
 
 
-        public static bool EliminarProductoVendidoPorId(int id)
+        public   bool EliminarProductoVendidoPorId(int id)
         {
-            using (CoderContext context = new CoderContext())
-            {
                 ProductoVendido? AEliminar = context.ProductoVendidos.Where(v => v.Id == id).FirstOrDefault();
 
                 if (AEliminar is not null)
@@ -104,7 +92,6 @@ namespace WebApiSistemaGestion.service
                     context.SaveChanges();
                     return true;
                 }
-            }
 
             return false;
         }

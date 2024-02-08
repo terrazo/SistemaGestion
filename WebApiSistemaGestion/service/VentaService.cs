@@ -6,46 +6,36 @@ using WebApiSistemaGestion.models;
 
 namespace WebApiSistemaGestion.service
 {
-    public static class VentaService
+    public  class VentaService
     {
+        private CoderContext context;
 
-
-
-        public static List<Venta> GetAllVentas()
+        public VentaService(CoderContext coderContext)
         {
-            using (CoderContext context = new CoderContext())
-            {
-                return context.Venta.ToList();
-            }
+            this.context = coderContext;
         }
 
-
-
-        public static List<Venta> ObtenerTodasLasVentas()
+        public  List<Venta> GetAllVentas()
         {
-            using (CoderContext context = new CoderContext())
-            {
+                return context.Venta.ToList();
+        }
 
+        public  List<Venta> ObtenerTodasLasVentas()
+        {
                 List<Venta> v = context.Venta.ToList();
 
                 return v;
-
-            }
         }
 
-        public static Venta ObtenerUsuarioPorId(int id)
+        public  Venta ObtenerUsuarioPorId(int id)
         {
-            using (CoderContext context = new CoderContext())
-            {
-
                 Venta? vbuscada = context.Venta.Where(v => v.Id == id).FirstOrDefault();
                 return vbuscada;
-            }
         }
 
-        public static Venta ObtenerVentaPorId2(int id)
+        public  Venta ObtenerVentaPorId2(int id)
         {
-            List<Venta> v = VentaService.ObtenerTodasLasVentas();
+            List<Venta> v = ObtenerTodasLasVentas();
 
             foreach (Venta item in v)
             {
@@ -57,23 +47,16 @@ namespace WebApiSistemaGestion.service
             return null;
         }
 
-        public static bool AgregarVenta(Venta v)
+        public  bool AgregarVenta(Venta v)
         {
-            using (CoderContext context = new CoderContext())
-            {
                 context.Venta.Add(v);
 
                 context.SaveChanges();
                 return true;
-            }
-
-
         }
 
-        public static bool ActualizarVentaPorId(Venta v, int id)
+        public  bool ActualizarVentaPorId(Venta v, int id)
         {
-            using (CoderContext context = new CoderContext())
-            {
                 Venta? vBuscado = context.Venta.Where(v => v.Id == id).FirstOrDefault();
 
 
@@ -85,14 +68,11 @@ namespace WebApiSistemaGestion.service
                 context.SaveChanges();
 
                 return true;
-            }
         }
 
 
-        public static bool EliminarVentaPorId(int id)
+        public  bool EliminarVentaPorId(int id)
         {
-            using (CoderContext context = new CoderContext())
-            {
                 Venta? AEliminar = context.Venta.Where(v => v.Id == id).FirstOrDefault();
 
                 if (AEliminar is not null)
@@ -101,16 +81,8 @@ namespace WebApiSistemaGestion.service
                     context.SaveChanges();
                     return true;
                 }
-            }
-
             return false;
         }
-
-
-
-
-
-
 
 
 

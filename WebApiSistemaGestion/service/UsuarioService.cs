@@ -4,11 +4,27 @@ using Microsoft.EntityFrameworkCore;
 using WebApiSistemaGestion.database;
 using WebApiSistemaGestion.models;
 
-namespace WebApiSistemaGestion.Service
+namespace WebApiSistemaGestion.service
 {
-    public static class UsuarioService
+    public class UsuarioService
     {
-        public static List<Usuario> GetAllUser()
+
+        private CoderContext context;
+
+        //constructor del usuarioService
+        public UsuarioService(CoderContext coderContext)
+        {
+            this.context = coderContext;
+        }
+
+        public List<Usuario> ObtenerTodosLosUsuarios()
+        {
+            return this.context.Usuarios.ToList();
+        }
+
+        /// ///////////////////////////////////////////////////////////
+
+        public List<Usuario> GetAllUsers()
         {
             using (CoderContext context = new CoderContext())
             {
@@ -16,21 +32,10 @@ namespace WebApiSistemaGestion.Service
             }
         }
 
+        /// ///////////////////////////////////////////////////////////
 
 
-        public static List<Usuario> ObtenerTodosLosUsuarios()
-        {
-            using (CoderContext context = new CoderContext())
-            {
-
-                List<Usuario> usuarios = context.Usuarios.ToList();
-
-                return usuarios;
-
-            }
-        }
-
-        public static Usuario ObtenerUsuarioPorId(int id)
+        public Usuario ObtenerUsuarioPorId(int id)
         {
             using (CoderContext context = new CoderContext())
             {
@@ -40,9 +45,9 @@ namespace WebApiSistemaGestion.Service
             }
         }
 
-        public static Usuario ObtenerUsuarioPorId2(int id)
+        public Usuario ObtenerUsuarioPorId2(int id)
         {
-            List<Usuario> usuarios = UsuarioService.ObtenerTodosLosUsuarios();
+            List<Usuario> usuarios = ObtenerTodosLosUsuarios();
 
             foreach (Usuario item in usuarios)
             {
@@ -54,7 +59,7 @@ namespace WebApiSistemaGestion.Service
             return null;
         }
 
-        public static bool AgregarUsuario(Usuario usuario)
+        public bool AgregarUsuario(Usuario usuario)
         {
             using (CoderContext context = new CoderContext())
             {
@@ -67,7 +72,7 @@ namespace WebApiSistemaGestion.Service
 
         }
 
-        public static bool ActualizarUsuarioPorId(Usuario usuario, int id)
+        public bool ActualizarUsuarioPorId(Usuario usuario, int id)
         {
             using (CoderContext context = new CoderContext())
             {
@@ -88,7 +93,7 @@ namespace WebApiSistemaGestion.Service
         }
 
 
-        public static bool EliminarUsuarioPorId(int id)
+        public bool EliminarUsuarioPorId(int id)
         {
             using (CoderContext context = new CoderContext())
             {
