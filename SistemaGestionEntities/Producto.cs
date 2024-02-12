@@ -12,14 +12,37 @@ namespace SistemaGestionEntities
         private string descripcion;
         private double costo;
         private double precioVenta;
-        private double stock;
+        private int stock;
         private int idUsuario;
 
         public int Id { get => id; set => id = value; }
         public string Descripcion { get => descripcion; set => descripcion = value; }
         public double Costo { get => costo; set => costo = value; }
         public double PrecioVenta { get => precioVenta; set => precioVenta = value; }
-        public double Stock { get => stock; set => stock = value; }
+        public int Stock { get => stock; set => stock = value; }
         public int IdUsuario { get => idUsuario; set => idUsuario = value; }
+
+        public Producto() { }
+
+        public Producto(int id, string descripcion, double costo, double precioVenta, int stock, int idUsuario)
+        {
+            this.id = id;
+            this.descripcion = descripcion;
+            this.costo = costo;
+            this.precioVenta= precioVenta;
+            this.stock = stock;
+            this.idUsuario = idUsuario;
+        }
+
+        public Producto(string descripcion, double costo, double precioVenta, int stock, int idUsuario)
+        {
+             this.descripcion = descripcion;
+            this.costo = costo;
+            this.precioVenta = precioVenta;
+            this.stock = stock;
+            this.idUsuario = idUsuario;
+        }
+
+
     }
 }

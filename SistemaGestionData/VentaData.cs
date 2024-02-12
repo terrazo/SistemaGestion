@@ -13,11 +13,12 @@ namespace SistemaGestionData
     public static class VentaData
     {
 
-        public static List<Venta> ObtenerVenta(int id)
+        public static Venta  ObtenerVenta(int id)
         {
-            List<Venta> list = new List<Venta>();
+             Venta  v = new Venta();
 
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "SELECT * FROM Venta where id = @id ";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -39,21 +40,17 @@ namespace SistemaGestionData
                         {
                             while (reader.Read())
                             {
-                                var v = new Venta();
-
+ 
                                 v.Id = Convert.ToInt32(reader["id"]);
 
                                 v.Comentarios = reader["Comentarios"].ToString();
                                 v.IdUsuario = Convert.ToInt32(reader["idUsuario"]);
-
-                                list.Add(v);
-
                             }
                         }
                     }
                 }
             }
-            return list;
+            return v;
         }
 
 
@@ -61,7 +58,8 @@ namespace SistemaGestionData
         {
             List<Venta> list = new List<Venta>();
 
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "SELECT * FROM Venta";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -96,7 +94,8 @@ namespace SistemaGestionData
 
         public static void CrearVenta(Venta v)
         {
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "INSERT INTO Venta (Comentarios,IdUsuario) VALUES(@Comentarios,@IdUsuario)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -107,8 +106,10 @@ namespace SistemaGestionData
                 {
                     command.Parameters.Add(new SqlParameter("Comentarios", SqlDbType.VarChar) { Value = v.Comentarios });
                     command.Parameters.Add(new SqlParameter("IdUsuario", SqlDbType.Int) { Value = v.IdUsuario });
+                    command.ExecuteNonQuery();
+
                 }
-                connection.Close();
+                //connection.Close(); Al usar "using" en los metodos hace que se cierre solo la conexion, por lo que el connection.Close() No seria necesario
             }
         }
 
@@ -117,7 +118,8 @@ namespace SistemaGestionData
 
         public static void ModificarVenta(Venta v)
         {
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "UPDATE Venta SET Comentarios = @Comentarios, IdUsuario = @IdUsuario WHERE Id =@Id";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -130,14 +132,17 @@ namespace SistemaGestionData
 
                     command.Parameters.Add(new SqlParameter("Comentarios", SqlDbType.VarChar) { Value = v.Comentarios });
                     command.Parameters.Add(new SqlParameter("IdUsuario", SqlDbType.Int) { Value = v.IdUsuario });
+                    command.ExecuteNonQuery();
+
                 }
-                connection.Close();
+                //connection.Close(); Al usar "using" en los metodos hace que se cierre solo la conexion, por lo que el connection.Close() No seria necesario
             }
         }
 
         public static void EliminarVenta(Venta v)
         {
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "DELETE from Venta WHERE Id =@Id";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -147,8 +152,10 @@ namespace SistemaGestionData
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.Add(new SqlParameter("Id", SqlDbType.Int) { Value = v.Id });
+                    command.ExecuteNonQuery();
+
                 }
-                connection.Close();
+                //connection.Close(); Al usar "using" en los metodos hace que se cierre solo la conexion, por lo que el connection.Close() No seria necesario
             }
 
         }

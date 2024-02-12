@@ -24,7 +24,10 @@ namespace WebApiSistemaGestion.database
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(@"Server=.;Database=coderhouse;Trusted_Connection=True;");
+
+                //string connectionString = @"Server =.;Database=coderhouse;Trusted_Connection=True;";
+                //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             }
         }
 

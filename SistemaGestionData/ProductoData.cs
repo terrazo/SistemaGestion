@@ -12,12 +12,13 @@ namespace SistemaGestionData
 {
     public static class ProductoData
     {
-
-        public static List<Producto> ObtenerProducto(int id)
+  
+        public static Producto  ObtenerProducto(int id)
         {
-            List<Producto> list = new List<Producto>();
+             Producto  p = new Producto();
 
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "SELECT * FROM Producto where id = @id ";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -39,17 +40,14 @@ namespace SistemaGestionData
                         {
                             while (reader.Read())
                             {
-                                var producto = new Producto();
-
-                                producto.Id = Convert.ToInt32(reader["id"]);
-                                producto.Descripcion = reader["Descripciones"].ToString();
-                                producto.Costo = (double)Convert.ToDecimal(reader["Costo"]);
-                                producto.PrecioVenta = (double)Convert.ToDecimal(reader["PrecioVenta"]);
-                                producto.Stock = (double)Convert.ToDecimal(reader["Stock"]);
-                                producto.IdUsuario = Convert.ToInt32(reader["idUsuario"]);
-
-                                list.Add(producto);
-
+ 
+                                p.Id = Convert.ToInt32(reader["id"]);
+                                p.Descripcion = reader["Descripciones"].ToString();
+                                p.Costo = (double)Convert.ToDecimal(reader["Costo"]);
+                                p.PrecioVenta = (double)Convert.ToDecimal(reader["PrecioVenta"]);
+                                p.Stock = (int)Convert.ToDecimal(reader["Stock"]);
+                                p.IdUsuario = Convert.ToInt32(reader["idUsuario"]);
+ 
                             }
                         }
                     }
@@ -57,7 +55,7 @@ namespace SistemaGestionData
 
                 }
             }
-            return list;
+            return p;
         }
 
 
@@ -65,7 +63,8 @@ namespace SistemaGestionData
         {
             List<Producto> list = new List<Producto>();
 
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "SELECT * FROM Producto";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -85,7 +84,7 @@ namespace SistemaGestionData
                                 producto.Descripcion = reader["Descripciones"].ToString();
                                 producto.Costo = (double)Convert.ToDecimal(reader["Costo"]);
                                 producto.PrecioVenta = (double)Convert.ToDecimal(reader["PrecioVenta"]);
-                                producto.Stock = (double)Convert.ToDecimal(reader["Stock"]);
+                                producto.Stock = (int)Convert.ToDecimal(reader["Stock"]);
                                 producto.IdUsuario = Convert.ToInt32(reader["idUsuario"]);
 
                                 list.Add(producto);
@@ -102,7 +101,8 @@ namespace SistemaGestionData
 
         public static void CrearProducto(Producto producto)
         {
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "INSERT INTO PRODUCTO (Descripciones, Costo, PrecioVenta, Stock, IdUsuario) VALUES(@Descripcion,@Costo,@PrecioVenta,@Stock,@IdUsuario)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -116,8 +116,11 @@ namespace SistemaGestionData
                     command.Parameters.Add(new SqlParameter("PrecioVenta", SqlDbType.Money) { Value = producto.PrecioVenta });
                     command.Parameters.Add(new SqlParameter("Stock", SqlDbType.Int) { Value = producto.Stock });
                     command.Parameters.Add(new SqlParameter("IdUsuario", SqlDbType.Int) { Value = producto.IdUsuario });
+
+                    command.ExecuteNonQuery();
+
                 }
-                connection.Close();
+                //connection.Close(); Al usar "using" en los metodos hace que se cierre solo la conexion, por lo que el connection.Close() No seria necesario
             }
         }
 
@@ -126,7 +129,8 @@ namespace SistemaGestionData
 
         public static void ModificarProducto(Producto producto)
         {
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "UPDATE PRODUCTO SET Descripciones = @Descripcion, Costo = @Costo, PrecioVenta = @PrecioVenta, Stock = @Stock, IdUsuario = @IdUsuario WHERE Id =@Id";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -141,14 +145,18 @@ namespace SistemaGestionData
                     command.Parameters.Add(new SqlParameter("PrecioVenta", SqlDbType.Money) { Value = producto.PrecioVenta });
                     command.Parameters.Add(new SqlParameter("Stock", SqlDbType.Int) { Value = producto.Stock });
                     command.Parameters.Add(new SqlParameter("IdUsuario", SqlDbType.Int) { Value = producto.IdUsuario });
+
+                    command.ExecuteNonQuery();
+
                 }
-                connection.Close();
+                //connection.Close(); Al usar "using" en los metodos hace que se cierre solo la conexion, por lo que el connection.Close() No seria necesario
             }
         }
 
         public static void EliminarProducto(Producto producto)
         {
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "DELETE from PRODUCTO WHERE Id =@Id";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -158,8 +166,11 @@ namespace SistemaGestionData
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.Add(new SqlParameter("Id", SqlDbType.Int) { Value = producto.Id });
+
+                    command.ExecuteNonQuery();
+
                 }
-                connection.Close();
+                //connection.Close(); Al usar "using" en los metodos hace que se cierre solo la conexion, por lo que el connection.Close() No seria necesario
             }
 
         }

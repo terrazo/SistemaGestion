@@ -13,11 +13,12 @@ namespace SistemaGestionData
     public static class UsuarioData
     {
 
-        public static List<Usuario> ObtenerUsuario(int id)
+        public static Usuario ObtenerUsuario(int id)
         {
-            List<Usuario> list = new List<Usuario>();
+            Usuario u = new Usuario();
 
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "SELECT * FROM Usuario where id = @id ";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -39,17 +40,13 @@ namespace SistemaGestionData
                         {
                             while (reader.Read())
                             {
-                                var usuario = new Usuario();
-                                usuario.Id = Convert.ToInt32(reader["id"]);
+                                u.Id = Convert.ToInt32(reader["id"]);
 
-                                usuario.Nombre = reader["Nombre"].ToString();
-                                usuario.Apellido = reader["Apellido"].ToString();
-                                usuario.NombreUsuario = reader["NombreUsuario"].ToString();
-                                usuario.Contraseña = reader["Contraseña"].ToString();
-                                usuario.Mail = reader["Mail"].ToString();
-
-                                list.Add(usuario);
-
+                                u.Nombre = reader["Nombre"].ToString();
+                                u.Apellido = reader["Apellido"].ToString();
+                                u.NombreUsuario = reader["NombreUsuario"].ToString();
+                                u.Contraseña = reader["Contraseña"].ToString();
+                                u.Mail = reader["Mail"].ToString();
                             }
                         }
                     }
@@ -57,7 +54,7 @@ namespace SistemaGestionData
 
                 }
             }
-            return list;
+            return u;
         }
 
 
@@ -65,7 +62,8 @@ namespace SistemaGestionData
         {
             List<Usuario> list = new List<Usuario>();
 
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "SELECT * FROM Usuario";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -104,7 +102,8 @@ namespace SistemaGestionData
         {
             List<Usuario> list = new List<Usuario>();
 
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "SELECT * FROM Usuario";
 
             try
@@ -151,7 +150,8 @@ namespace SistemaGestionData
 
         public static void CrearUsuario(Usuario usuario)
         {
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "INSERT INTO Usuario (Nombre, Apellido, NombreUsuario, Contraseña, Mail) VALUES(@Nombre, @Apellido, @NombreUsuario, @Contraseña, @Mail)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -165,8 +165,10 @@ namespace SistemaGestionData
                     command.Parameters.Add(new SqlParameter("NombreUsuario", SqlDbType.VarChar) { Value = usuario.NombreUsuario });
                     command.Parameters.Add(new SqlParameter("Contraseña", SqlDbType.VarChar) { Value = usuario.Contraseña });
                     command.Parameters.Add(new SqlParameter("Mail", SqlDbType.VarChar) { Value = usuario.Mail });
+
+                    command.ExecuteNonQuery();
                 }
-                connection.Close();
+                //connection.Close(); Al usar "using" en los metodos hace que se cierre solo la conexion, por lo que el connection.Close() No seria necesario
             }
         }
 
@@ -175,7 +177,8 @@ namespace SistemaGestionData
 
         public static void ModificarUsuario(Usuario usuario)
         {
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "UPDATE usuario SET Nombre=@Nombre, Apellido=@Apellido, NombreUsuario=@NombreUsuario, Contraseña= @Contraseña, Mail=@Mail WHERE Id =@Id";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -191,14 +194,18 @@ namespace SistemaGestionData
                     command.Parameters.Add(new SqlParameter("NombreUsuario", SqlDbType.VarChar) { Value = usuario.NombreUsuario });
                     command.Parameters.Add(new SqlParameter("Contraseña", SqlDbType.VarChar) { Value = usuario.Contraseña });
                     command.Parameters.Add(new SqlParameter("Mail", SqlDbType.VarChar) { Value = usuario.Mail });
+
+                    command.ExecuteNonQuery();
+
                 }
-                connection.Close();
+                //connection.Close(); Al usar "using" en los metodos hace que se cierre solo la conexion, por lo que el connection.Close() No seria necesario
             }
         }
 
         public static void EliminarUsuario(Usuario usuario)
         {
-            string connectionString = @"Server=(localdb)\mssqllocaldb;Database=SistemaGestion;Trusted_Connection=True;";
+            string connectionString = @"Server=.;Database=coderhouse;Trusted_Connection=True;";
+            //string connectionString = @"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;";
             string query = "DELETE from usuario WHERE Id =@Id";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -208,8 +215,11 @@ namespace SistemaGestionData
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.Add(new SqlParameter("Id", SqlDbType.Int) { Value = usuario.Id });
+
+                    command.ExecuteNonQuery();
+
                 }
-                connection.Close();
+                //connection.Close(); Al usar "using" en los metodos hace que se cierre solo la conexion, por lo que el connection.Close() No seria necesario
             }
 
         }

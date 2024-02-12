@@ -10,12 +10,31 @@ namespace SistemaGestionEntities
     {
         private int id;
         private int idProducto;
-        private double stock;
+        private int stock;
         private int idVenta;
 
         public int Id { get => id; set => id = value; }
         public int IdProducto { get => idProducto; set => idProducto = value; }
-        public double Stock { get => stock; set => stock = value; }
+        public int Stock { get => stock; set => stock = value; }
         public int IdVenta { get => idVenta; set => idVenta = value; }
+
+
+
+        public ProductoVendido() { }
+
+        public ProductoVendido(int id, int idProducto, int stock, int idVenta)
+        {
+            Id = id;
+            IdProducto = idProducto;
+            Stock = stock;
+            IdVenta = idVenta;
+        }
+
+        public ProductoVendido(int idProducto, int stock, int idVenta)
+        {
+            IdProducto = idProducto;
+            Stock = stock;
+            IdVenta = idVenta;
+        }
     }
 }

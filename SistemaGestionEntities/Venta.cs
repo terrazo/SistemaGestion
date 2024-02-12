@@ -15,5 +15,23 @@ namespace SistemaGestionEntities
         public int Id { get => id; set => id = value; }
         public string Comentarios { get => comentarios; set => comentarios = value; }
         public int IdUsuario { get => idUsuario; set => idUsuario = value; }
+
+
+        public Venta() { }
+
+        public Venta(int id, string comentarios, int idUsuario)
+        {
+            Id = id;
+            Comentarios = comentarios;
+            IdUsuario = idUsuario;
+ 
+        }
+
+        public Venta(string comentarios, int idUsuario )
+        {
+            Comentarios = comentarios;
+            IdUsuario = idUsuario;
+ 
+        }
     }
 }
