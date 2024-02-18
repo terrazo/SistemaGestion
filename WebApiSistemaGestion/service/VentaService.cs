@@ -6,7 +6,7 @@ using WebApiSistemaGestion.models;
 
 namespace WebApiSistemaGestion.service
 {
-    public  class VentaService
+    public class VentaService
     {
         private CoderContext context;
 
@@ -15,25 +15,25 @@ namespace WebApiSistemaGestion.service
             this.context = coderContext;
         }
 
-        public  List<Venta> GetAllVentas()
+        public List<Venta> GetAllVentas()
         {
-                return context.Venta.ToList();
+            return context.Venta.ToList();
         }
 
-        public  List<Venta> ObtenerTodasLasVentas()
+        public List<Venta> ObtenerTodasLasVentas()
         {
-                List<Venta> v = context.Venta.ToList();
+            List<Venta> v = context.Venta.ToList();
 
-                return v;
+            return v;
         }
 
-        public  Venta ObtenerUsuarioPorId(int id)
+        public Venta ObtenerUsuarioPorId(int id)
         {
-                Venta? vbuscada = context.Venta.Where(v => v.Id == id).FirstOrDefault();
-                return vbuscada;
+            Venta? vbuscada = context.Venta.Where(v => v.Id == id).FirstOrDefault();
+            return vbuscada;
         }
 
-        public  Venta ObtenerVentaPorId2(int id)
+        public Venta ObtenerVentaPorId2(int id)
         {
             List<Venta> v = ObtenerTodasLasVentas();
 
@@ -47,40 +47,40 @@ namespace WebApiSistemaGestion.service
             return null;
         }
 
-        public  bool AgregarVenta(Venta v)
+        public bool AgregarVenta(Venta v)
         {
-                context.Venta.Add(v);
+            context.Venta.Add(v);
 
-                context.SaveChanges();
-                return true;
+            context.SaveChanges();
+            return true;
         }
 
-        public  bool ActualizarVentaPorId(Venta v, int id)
+        public bool ActualizarVentaPorId(Venta v, int id)
         {
-                Venta? vBuscado = context.Venta.Where(v => v.Id == id).FirstOrDefault();
+            Venta? vBuscado = context.Venta.Where(v => v.Id == id).FirstOrDefault();
 
 
-                vBuscado.Comentarios = vBuscado.Comentarios;
-                vBuscado.IdUsuario = vBuscado.IdUsuario;
+            vBuscado.Comentarios = vBuscado.Comentarios;
+            vBuscado.IdUsuario = vBuscado.IdUsuario;
 
-                context.Venta.Update(vBuscado);
+            context.Venta.Update(vBuscado);
 
-                context.SaveChanges();
+            context.SaveChanges();
 
-                return true;
+            return true;
         }
 
 
-        public  bool EliminarVentaPorId(int id)
+        public bool EliminarVentaPorId(int id)
         {
-                Venta? AEliminar = context.Venta.Where(v => v.Id == id).FirstOrDefault();
+            Venta? AEliminar = context.Venta.Where(v => v.Id == id).FirstOrDefault();
 
-                if (AEliminar is not null)
-                {
-                    context.Venta.Remove(AEliminar);
-                    context.SaveChanges();
-                    return true;
-                }
+            if (AEliminar is not null)
+            {
+                context.Venta.Remove(AEliminar);
+                context.SaveChanges();
+                return true;
+            }
             return false;
         }
 

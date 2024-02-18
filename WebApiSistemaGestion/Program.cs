@@ -26,7 +26,10 @@ namespace WebApiSistemaGestion
 
             builder.Services.AddDbContext<CoderContext>(options =>
             {
-                options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;");
+
+                //options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=coderhouse;Trusted_Connection=True;");
+                options.UseSqlServer("Server=.; Database=coderhouse; Trusted_Connection=True;");
+
             });
 
 

@@ -17,32 +17,32 @@ namespace WebApiSistemaGestion.service
         }
 
 
-        public   List<ProductoVendido> GetAllProductosVendidos()
+        public List<ProductoVendido> GetAllProductosVendidos()
         {
-                return context.ProductoVendidos.ToList();
+            return context.ProductoVendidos.ToList();
         }
 
 
 
-        public   List<ProductoVendido> ObtenerTodosLosProductosVendidos()
+        public List<ProductoVendido> ObtenerTodosLosProductosVendidos()
         {
-         
-                List<ProductoVendido> v = context.ProductoVendidos.ToList();
 
-                return v;
+            List<ProductoVendido> v = context.ProductoVendidos.ToList();
+
+            return v;
 
         }
 
-        public   ProductoVendido ObtenerProductoVendidoPorId(int id)
+        public ProductoVendido ObtenerProductoVendidoPorId(int id)
         {
-       
 
-                ProductoVendido? pvbuscado = context.ProductoVendidos.Where(pv => pv.Id == id).FirstOrDefault();
 
-                return pvbuscado;
+            ProductoVendido? pvbuscado = context.ProductoVendidos.Where(pv => pv.Id == id).FirstOrDefault();
+
+            return pvbuscado;
         }
 
-        public   ProductoVendido ObtenerProductoVendidoPorId2(int id)
+        public ProductoVendido ObtenerProductoVendidoPorId2(int id)
         {
             List<ProductoVendido> v = ObtenerTodosLosProductosVendidos();
 
@@ -56,42 +56,42 @@ namespace WebApiSistemaGestion.service
             return null;
         }
 
-        public   bool AgregarProductoVendido(ProductoVendido v)
+        public bool AgregarProductoVendido(ProductoVendido v)
         {
-                context.ProductoVendidos.Add(v);
+            context.ProductoVendidos.Add(v);
 
-                context.SaveChanges();
-                return true;
+            context.SaveChanges();
+            return true;
         }
 
-        public   bool ActualizarProductoVendidoPorId(ProductoVendido v, int id)
+        public bool ActualizarProductoVendidoPorId(ProductoVendido v, int id)
         {
-                ProductoVendido? vBuscado = context.ProductoVendidos.Where(v => v.Id == id).FirstOrDefault();
+            ProductoVendido? vBuscado = context.ProductoVendidos.Where(v => v.Id == id).FirstOrDefault();
 
 
-                vBuscado.Stock = vBuscado.Stock;
-                vBuscado.IdProducto = vBuscado.IdProducto;
-                vBuscado.IdVenta = vBuscado.IdVenta;
+            vBuscado.Stock = vBuscado.Stock;
+            vBuscado.IdProducto = vBuscado.IdProducto;
+            vBuscado.IdVenta = vBuscado.IdVenta;
 
 
-                context.ProductoVendidos.Update(vBuscado);
+            context.ProductoVendidos.Update(vBuscado);
 
-                context.SaveChanges();
+            context.SaveChanges();
 
-                return true;
+            return true;
         }
 
 
-        public   bool EliminarProductoVendidoPorId(int id)
+        public bool EliminarProductoVendidoPorId(int id)
         {
-                ProductoVendido? AEliminar = context.ProductoVendidos.Where(v => v.Id == id).FirstOrDefault();
+            ProductoVendido? AEliminar = context.ProductoVendidos.Where(v => v.Id == id).FirstOrDefault();
 
-                if (AEliminar is not null)
-                {
-                    context.ProductoVendidos.Remove(AEliminar);
-                    context.SaveChanges();
-                    return true;
-                }
+            if (AEliminar is not null)
+            {
+                context.ProductoVendidos.Remove(AEliminar);
+                context.SaveChanges();
+                return true;
+            }
 
             return false;
         }

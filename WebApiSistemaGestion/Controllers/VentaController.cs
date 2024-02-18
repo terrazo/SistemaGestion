@@ -7,7 +7,7 @@ namespace WebApiSistemaGestion.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VentaController : Controller 
+    public class VentaController : Controller
     {
 
         private VentaService ventaService;
