@@ -35,6 +35,12 @@ namespace WebApiSistemaGestion.service
             return vbuscada;
         }
 
+        public List<Venta> ObtenerVentasPorIdUsuario(int idUsuario)
+        {
+            List<Venta>? vbuscada = context.Venta.Where(v => v.IdUsuario == idUsuario).ToList();
+            return vbuscada;
+        }
+
         public Venta ObtenerVentaPorId2(int id)
         {
             List<Venta> v = ObtenerTodasLasVentas();

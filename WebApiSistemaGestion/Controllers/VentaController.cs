@@ -25,6 +25,12 @@ namespace WebApiSistemaGestion.Controllers
             return ventaService.GetAllVentas();
         }
 
+        [HttpGet("{idUsuario}")]
+        public List<Venta> getVentasPorIdUsuario(int idUsuario)
+        {
+            return ventaService.ObtenerVentasPorIdUsuario(idUsuario);
+        }
+
         //////////////////////////////////////////////////////////////////////////////////////////
 
 
