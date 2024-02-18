@@ -30,7 +30,7 @@ namespace WebApiSistemaGestion.Controllers
 
         //////////////////////////////////////////////////////////////////////////////////////////
 
-        [HttpPost]
+        [HttpPost] //
         public IActionResult AgregarUsuario([FromBody] UsuarioDTO usuarioDTO)
         {
 
@@ -96,9 +96,29 @@ namespace WebApiSistemaGestion.Controllers
             {
                 return base.Conflict(new { error = ex.Message, status = HttpStatusCode.Conflict });
             }
-
-
         }
+/*
+        [HttpGet("{usuario}/{password}")]
+        public ActionResult<Usuario> IniciarSesion(string usuario, string password)
+        {
+            try
+            {
+                return usuarioService.IniciarSesion(usuario, password);
+            }
+            catch (DataBaseException ex)
+            {
+                return base.Conflict(new { error = ex.Message, status = HttpStatusCode.InternalServerError });
+            }
+            catch (UsuarioNoEncontradoException ex)
+            {
+                return base.Conflict(new { error = ex.Message, status = HttpStatusCode.NoContent });
+            }
+            catch (Exception ex)
+            {
+                return base.Conflict(new { error = ex.Message, status = HttpStatusCode.Conflict });
+            }
+        }
+*/
 
         /*
         [HttpGet("nombre")]

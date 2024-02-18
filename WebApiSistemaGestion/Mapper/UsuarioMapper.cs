@@ -11,6 +11,7 @@ namespace WebApiSistemaGestion.Mapper
             Usuario u = new Usuario();
             u.Id = dto.Id;
             u.Nombre = dto.Nombre;
+            u.Apellido = dto.Apellido;
             u.NombreUsuario = dto.NombreUsuario;
             u.Contraseña = dto.Contraseña;
             u.Mail = dto.Mail;
@@ -24,6 +25,7 @@ namespace WebApiSistemaGestion.Mapper
 
             dto.Id = u.Id;
             dto.Nombre = u.Nombre;
+            dto.Apellido = u.Apellido;
             dto.NombreUsuario = u.NombreUsuario;
             dto.Contraseña = u.Contraseña;
             dto.Mail = u.Mail;

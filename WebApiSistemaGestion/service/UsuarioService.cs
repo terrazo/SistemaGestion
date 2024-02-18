@@ -61,7 +61,20 @@ namespace WebApiSistemaGestion.service
             return usuarioBuscado;
         }
 
+        /*
+        public Usuario? IniciarSesion(string usuario, string password)
+        {
+            List<Usuario> usuarios = ObtenerTodosLosUsuarios();
 
+            Usuario? usuarioBuscado = usuarios.Find(u => u.NombreUsuario == usuario && u.Contraseña == password);
+
+            if (usuarioBuscado is null)
+            {
+                throw new UsuarioNoEncontradoException("Usuario no encontrado");
+            }
+            return usuarioBuscado;
+        }
+        */
 
         public Usuario ObtenerUsuarioPorId(int id)
         {
