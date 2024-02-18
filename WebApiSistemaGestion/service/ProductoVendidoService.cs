@@ -110,7 +110,7 @@ namespace WebApiSistemaGestion.service
 
         public List<ProductoVendido>? ObtenerProductosVendidosPorIdUsuario(int idUsuario)
         {
-         
+
             List<Producto> productos = context.Productos.ToList();
 
             List<Producto> productosFiltrados = productos.Where(p => p.IdUsuario == idUsuario).ToList();
@@ -136,6 +136,32 @@ namespace WebApiSistemaGestion.service
             return resultadoFinal;
 
         }
+
+        public List<ProductoVendidoDTO>? ObtenerProductoVendidosPorIdUsuario(int idUsuario)
+        {
+
+            List<Producto>? productos = context.Productos
+                                                .Include(p => p.ProductoVendidos)
+                                                .Where(p => p.IdUsuario == idUsuario)
+                                                .ToList();
+
+            List<ProductoVendido>? productosVendidos = productos
+                                                       .Select(p => p.ProductoVendidos
+                                                                   .ToList()
+                                                                   .Find(pv => pv.IdProducto == p.Id))
+                                                                   .Where(p => !object.ReferenceEquals(p, null))
+                                                                   .ToList();
+
+            List<ProductoVendidoDTO> dto = productosVendidos
+                                           .Select(p => ProductoVendidoMapper.MapearADTO(p))
+                                           .ToList();
+            return dto;
+        }
+
+
+
+
+
 
     }
 }
