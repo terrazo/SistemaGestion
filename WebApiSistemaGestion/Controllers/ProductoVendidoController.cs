@@ -19,10 +19,12 @@ namespace WebApiSistemaGestion.Controllers
 
 
         [HttpGet]
-        public List<ProductoVendido> getUsuarios()
+        public List<ProductoVendido> getProductosVendidos()
         {
             return productoVendidoService.GetAllProductosVendidos();
         }
+
+ 
 
         //////////////////////////////////////////////////////////////////////////////////////////
 

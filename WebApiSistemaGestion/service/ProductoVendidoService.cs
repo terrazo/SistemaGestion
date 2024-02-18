@@ -42,20 +42,22 @@ namespace WebApiSistemaGestion.service
             return pvbuscado;
         }
 
-        public ProductoVendido ObtenerProductoVendidoPorId2(int id)
+        /*
+        public List<ProductoVendido> ObtenerProductosVendidosPorId(int id)
         {
             List<ProductoVendido> v = ObtenerTodosLosProductosVendidos();
+            List<ProductoVendido> vPorId = new List<ProductoVendido>();
 
             foreach (ProductoVendido item in v)
             {
                 if (item.Id == id)
                 {
-                    return item;
+                    v.Add(item);
                 }
             }
-            return null;
+            return vPorId;
         }
-
+        */
         public bool AgregarProductoVendido(ProductoVendido v)
         {
             context.ProductoVendidos.Add(v);

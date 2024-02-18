@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using WebApiSistemaGestion.database;
 using WebApiSistemaGestion.DTOs;
 using WebApiSistemaGestion.Mapper;
@@ -55,6 +56,17 @@ namespace WebApiSistemaGestion.service
 
             if (producto is not null)
             {
+                List<ProductoVendido>? productoVendidos = context.ProductoVendidos.Where(p => p.IdProducto == id).ToList();
+
+                if (productoVendidos.Count > 0)
+                {
+                    foreach (ProductoVendido v in productoVendidos)
+                    {
+                        this.context.Remove(producto);
+                        this.context.SaveChanges();
+                    }
+                }
+
                 this.context.Remove(producto);
                 this.context.SaveChanges();
                 return true;
