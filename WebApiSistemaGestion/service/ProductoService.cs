@@ -34,6 +34,15 @@ namespace WebApiSistemaGestion.service
             return productos;
         }
 
+
+        public List<Producto> GetProductosPorIdUsuario(int idUsuario)
+        {
+
+            List<Producto> productos = context.Productos.Where(p=>p.IdUsuario==idUsuario).ToList();
+
+            return productos;
+        }
+
         public Producto ObtenerProductoPorId(int id)
         {
             Producto? productoBuscado = context.Productos.Where(p => p.Id == id).FirstOrDefault();

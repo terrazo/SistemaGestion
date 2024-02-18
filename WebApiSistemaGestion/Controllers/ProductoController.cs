@@ -35,6 +35,13 @@ namespace WebApiSistemaGestion.Controllers
         }
         */
 
+        [HttpGet("{idUsuario}")]
+        public List<Producto> getProductosPorIdUsuario(int idUsuario)
+        {
+            return productoService.GetProductosPorIdUsuario(idUsuario);
+        }
+        /// ///////////////////////////
+        
         [HttpPost]
         public IActionResult AgregarUnNuevoProducto([FromBody] ProductoDTO producto)
         {
@@ -42,7 +49,7 @@ namespace WebApiSistemaGestion.Controllers
             if (this.productoService.AgregarUnProducto(producto))
             {
 
-                return base.Ok(new { mensaje = "Prodcuto agregado", producto });
+                return base.Ok(new { mensaje = "Producto agregado", producto });
             }
             else
             {
