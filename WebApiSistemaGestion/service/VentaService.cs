@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using WebApiSistemaGestion.database;
+using WebApiSistemaGestion.DTOs;
+using WebApiSistemaGestion.Mapper;
 using WebApiSistemaGestion.models;
 
 
@@ -27,7 +29,7 @@ namespace WebApiSistemaGestion.service
             return v;
         }
 
-        public Venta ObtenerUsuarioPorId(int id)
+        public Venta ObtenerVentaPorId(int id)
         {
             Venta? vbuscada = context.Venta.Where(v => v.Id == id).FirstOrDefault();
             return vbuscada;
@@ -47,27 +49,33 @@ namespace WebApiSistemaGestion.service
             return null;
         }
 
-        public bool AgregarVenta(Venta v)
+        public bool AgregarVenta(VentaDTO vDTO)
         {
-            context.Venta.Add(v);
+
+            Venta venta = VentaMapper.MapearAVenta(vDTO);
+
+            context.Venta.Add(venta);
 
             context.SaveChanges();
             return true;
         }
 
-        public bool ActualizarVentaPorId(Venta v, int id)
+        public bool ActualizarVentaPorId(VentaDTO vDTO, int id)
         {
             Venta? vBuscado = context.Venta.Where(v => v.Id == id).FirstOrDefault();
 
+            if (vBuscado is not null)
+            {
+                vBuscado.Comentarios = vDTO.Comentarios;
+                vBuscado.IdUsuario = vDTO.IdUsuario;
 
-            vBuscado.Comentarios = vBuscado.Comentarios;
-            vBuscado.IdUsuario = vBuscado.IdUsuario;
+                context.Venta.Update(vBuscado);
 
-            context.Venta.Update(vBuscado);
+                context.SaveChanges();
 
-            context.SaveChanges();
-
-            return true;
+                return true;
+            }
+            return false;
         }
 
 

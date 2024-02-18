@@ -2,6 +2,8 @@
 
 using Microsoft.EntityFrameworkCore;
 using WebApiSistemaGestion.database;
+using WebApiSistemaGestion.DTOs;
+using WebApiSistemaGestion.Mapper;
 using WebApiSistemaGestion.models;
 
 namespace WebApiSistemaGestion.service
@@ -37,12 +39,8 @@ namespace WebApiSistemaGestion.service
 
         public Usuario ObtenerUsuarioPorId(int id)
         {
-            using (CoderContext context = new CoderContext())
-            {
-
                 Usuario? usuarioBuscado = context.Usuarios.Where(u => u.Id == id).FirstOrDefault();
                 return usuarioBuscado;
-            }
         }
 
         public Usuario ObtenerUsuarioPorId2(int id)
@@ -59,44 +57,39 @@ namespace WebApiSistemaGestion.service
             return null;
         }
 
-        public bool AgregarUsuario(Usuario usuario)
+        public bool AgregarUsuario(UsuarioDTO usuarioDTO)
         {
-            using (CoderContext context = new CoderContext())
-            {
+            Usuario usuario = UsuarioMapper.MapearAUsuario(usuarioDTO);
+
                 context.Usuarios.Add(usuario);
 
                 context.SaveChanges();
                 return true;
-            }
-
-
         }
 
-        public bool ActualizarUsuarioPorId(Usuario usuario, int id)
+        public bool ActualizarUsuarioPorId(UsuarioDTO usuarioDTO, int id)
         {
-            using (CoderContext context = new CoderContext())
-            {
                 Usuario? usuarioBuscado = context.Usuarios.Where(u => u.Id == id).FirstOrDefault();
+           
+            if (usuarioBuscado is not null)
+            {
 
-
-                usuarioBuscado.Nombre = usuario.Nombre;
-                usuarioBuscado.NombreUsuario = usuario.NombreUsuario;
-                usuarioBuscado.Apellido = usuario.Apellido;
-                usuarioBuscado.Mail = usuario.Mail;
+                usuarioBuscado.Nombre = usuarioDTO.Nombre;
+                usuarioBuscado.NombreUsuario = usuarioDTO.NombreUsuario;
+                usuarioBuscado.Apellido = usuarioDTO.Apellido;
+                usuarioBuscado.Mail = usuarioDTO.Mail;
 
                 context.Usuarios.Update(usuarioBuscado);
 
                 context.SaveChanges();
-
                 return true;
             }
+            return false;
         }
 
 
         public bool EliminarUsuarioPorId(int id)
         {
-            using (CoderContext context = new CoderContext())
-            {
                 Usuario? AEliminar = context.Usuarios.Where(u => u.Id == id).FirstOrDefault();
 
                 if (AEliminar is not null)
@@ -105,8 +98,6 @@ namespace WebApiSistemaGestion.service
                     context.SaveChanges();
                     return true;
                 }
-            }
-
             return false;
         }
 

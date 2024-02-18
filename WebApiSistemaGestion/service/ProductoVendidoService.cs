@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using WebApiSistemaGestion.database;
+using WebApiSistemaGestion.DTOs;
+using WebApiSistemaGestion.Mapper;
 using WebApiSistemaGestion.models;
 
 
@@ -58,29 +60,35 @@ namespace WebApiSistemaGestion.service
             return vPorId;
         }
         */
-        public bool AgregarProductoVendido(ProductoVendido v)
+        public bool AgregarProductoVendido(ProductoVendidoDTO dto)
         {
-            context.ProductoVendidos.Add(v);
+            ProductoVendido pv = ProductoVendidoMapper.MapearAProductoVendido(dto);
+
+            context.ProductoVendidos.Add(pv);
 
             context.SaveChanges();
             return true;
         }
 
-        public bool ActualizarProductoVendidoPorId(ProductoVendido v, int id)
+        public bool ActualizarProductoVendidoPorId(ProductoVendidoDTO productoVendidoDTO, int id)
         {
             ProductoVendido? vBuscado = context.ProductoVendidos.Where(v => v.Id == id).FirstOrDefault();
 
 
-            vBuscado.Stock = vBuscado.Stock;
-            vBuscado.IdProducto = vBuscado.IdProducto;
-            vBuscado.IdVenta = vBuscado.IdVenta;
+            if (vBuscado is not null)
+            {
+                vBuscado.Stock = productoVendidoDTO.Stock;
+                vBuscado.IdProducto = productoVendidoDTO.IdProducto;
+                vBuscado.IdVenta = productoVendidoDTO.IdVenta;
 
 
-            context.ProductoVendidos.Update(vBuscado);
+                context.ProductoVendidos.Update(vBuscado);
 
-            context.SaveChanges();
+                context.SaveChanges();
 
-            return true;
+                return true;
+            }
+            return false;
         }
 
 
