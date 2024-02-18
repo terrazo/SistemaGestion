@@ -74,5 +74,30 @@ namespace WebApiSistemaGestion.Controllers
             return base.BadRequest(new { status = 400, mensaje = "El id no puede ser negativo" });
         }
 
+        /////////////
+        ///
+
+        /*
+        [HttpPost]
+        public IActionResult CargarVenta([FromBody] VentaDTO venta, List<ProductoVendidoDTO> pvList)
+        {
+
+            if (this.ventaService.AgregarVenta(venta))
+            {
+                foreach(var item in pvList)
+                {
+                    this.
+                }
+
+
+                return base.Ok(new { mensaje = "Venta agregado", venta });
+            }
+            else
+            {
+                return base.Conflict(new { mensaje = "No se agrego una Venta" });
+            }
+        }
+        */
+
     }
 }

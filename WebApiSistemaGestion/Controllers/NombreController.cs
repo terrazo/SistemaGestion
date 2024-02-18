@@ -12,11 +12,20 @@ namespace WebApiSistemaGestion.Controllers
         {
             this.list = new List<string>() { "Guillermo Terrazo", "CoderHouse", "C#" };
         }
+
         [HttpGet]
         public string ObtenerNombre()
         {
             return "Guillermo Terrazo";
         }
+
+        /*
+        [HttpGet]
+        public string ObtenerNombreDelAlumno()
+        {
+            return "Guillermo Terrazo";
+        }
+        */
 
         [HttpGet("listado")]
         public List<string> ObtenerListadoDeNombres()

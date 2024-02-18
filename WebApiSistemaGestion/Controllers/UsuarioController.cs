@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using WebApiSistemaGestion.database;
 using WebApiSistemaGestion.DTOs;
+using WebApiSistemaGestion.Exceptions;
 using WebApiSistemaGestion.models;
 using WebApiSistemaGestion.service;
 
@@ -71,6 +73,31 @@ namespace WebApiSistemaGestion.Controllers
 
             }
             return base.BadRequest(new { status = 400, mensaje = "El id no puede ser negativo" });
+        }
+
+        /// ///////////////////////////
+        [HttpGet("{usuario}/{password}")]
+
+        public ActionResult<Usuario> ObtenerUsuarioPorNombreYPassword(string usuario, string password)
+        {
+            try
+            {
+                return usuarioService.ObtenerUsuarioPorUsuarioYPassword(usuario, password);
+            }
+            catch (DataBaseException ex)
+            {
+                return base.Conflict(new { error = ex.Message, status = HttpStatusCode.InternalServerError });
+            }
+            catch (UsuarioNoEncontradoException ex)
+            {
+                return base.Conflict(new { error = ex.Message, status = HttpStatusCode.NoContent });
+            }
+            catch (Exception ex)
+            {
+                return base.Conflict(new { error = ex.Message, status = HttpStatusCode.Conflict });
+            }
+
+
         }
 
         /*

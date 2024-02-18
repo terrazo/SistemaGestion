@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApiSistemaGestion.database;
 using WebApiSistemaGestion.DTOs;
+using WebApiSistemaGestion.Exceptions;
 using WebApiSistemaGestion.Mapper;
 using WebApiSistemaGestion.models;
 
@@ -35,6 +36,31 @@ namespace WebApiSistemaGestion.service
         }
 
         /// ///////////////////////////////////////////////////////////
+
+        public Usuario ObtenerUsuarioPorNombreDeUsuario(string nombreDeUsuario)
+        {
+            Usuario? usuarioBuscado = context.Usuarios.Where(u => u.NombreUsuario == nombreDeUsuario).FirstOrDefault();
+            if (usuarioBuscado is null)
+            {
+                throw new Exception("Usuario no encontrado");
+            }
+
+            return usuarioBuscado;
+        }
+
+        public Usuario? ObtenerUsuarioPorUsuarioYPassword(string usuario, string password)
+        {
+            List<Usuario> usuarios = ObtenerTodosLosUsuarios();
+
+            Usuario? usuarioBuscado = usuarios.Find(u => u.NombreUsuario == usuario && u.Contraseña == password);
+
+            if (usuarioBuscado is null)
+            {
+                throw new UsuarioNoEncontradoException("Usuario no encontrado");
+            }
+            return usuarioBuscado;
+        }
+
 
 
         public Usuario ObtenerUsuarioPorId(int id)

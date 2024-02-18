@@ -106,8 +106,36 @@ namespace WebApiSistemaGestion.service
             return false;
         }
 
+        ///////////////////////////////////////////
+
+        public List<ProductoVendido>? ObtenerProductosVendidosPorIdUsuario(int idUsuario)
+        {
+         
+            List<Producto> productos = context.Productos.ToList();
+
+            List<Producto> productosFiltrados = productos.Where(p => p.IdUsuario == idUsuario).ToList();
 
 
+            List<ProductoVendido> resultadoFinal = new List<ProductoVendido>();
+
+
+            List<ProductoVendido> productosVendidos = ObtenerTodosLosProductosVendidos();
+
+
+
+            foreach (Producto p in productosFiltrados)
+            {
+                int id = p.Id;
+                ProductoVendido? pVendido = productosVendidos.Find(p => p.IdProducto == id);
+
+                if (pVendido is not null)
+                {
+                    resultadoFinal.Add(pVendido);
+                }
+            }
+            return resultadoFinal;
+
+        }
 
     }
 }

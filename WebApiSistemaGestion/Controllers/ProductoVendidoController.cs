@@ -77,5 +77,15 @@ namespace WebApiSistemaGestion.Controllers
             return base.BadRequest(new { status = 400, mensaje = "El id no puede ser negativo" });
         }
 
+        ////////////////////////////////////
+        ///
+
+        [HttpGet("{idUsuario}")]
+        public ActionResult<List<ProductoVendido>>? ObtenerProductosVendidosPorIdUsuario(int idUsuario)
+        {
+            return productoVendidoService.ObtenerProductosVendidosPorIdUsuario(idUsuario);
+        }
+
+
     }
 }
