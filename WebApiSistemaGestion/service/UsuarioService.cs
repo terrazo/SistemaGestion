@@ -14,10 +14,13 @@ namespace WebApiSistemaGestion.service
 
         private CoderContext context;
 
+        private readonly UsuarioMapper usuarioMapper;
+
         //constructor del usuarioService
-        public UsuarioService(CoderContext coderContext)
+        public UsuarioService(CoderContext coderContext, UsuarioMapper usuarioMapper)
         {
             this.context = coderContext;
+            this.usuarioMapper = usuarioMapper;
         }
 
         public List<Usuario> ObtenerTodosLosUsuarios()
@@ -98,7 +101,7 @@ namespace WebApiSistemaGestion.service
 
         public bool AgregarUsuario(UsuarioDTO usuarioDTO)
         {
-            Usuario usuario = UsuarioMapper.MapearAUsuario(usuarioDTO);
+            Usuario usuario = usuarioMapper.MapearAUsuario(usuarioDTO);
 
                 context.Usuarios.Add(usuario);
 

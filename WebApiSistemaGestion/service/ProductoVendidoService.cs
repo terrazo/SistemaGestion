@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using WebApiSistemaGestion.database;
 using WebApiSistemaGestion.DTOs;
 using WebApiSistemaGestion.Mapper;
@@ -11,11 +12,13 @@ namespace WebApiSistemaGestion.service
     public class ProductoVendidoService
     {
 
-        private CoderContext context;
+        private readonly CoderContext context;
+        private readonly ProductoVendidoMapper productoVendidoMapper;
 
-        public ProductoVendidoService(CoderContext coderContext)
+        public ProductoVendidoService(CoderContext coderContext, ProductoVendidoMapper productoVendidoMapper)
         {
             this.context = coderContext;
+            this.productoVendidoMapper = productoVendidoMapper; 
         }
 
 
@@ -62,10 +65,10 @@ namespace WebApiSistemaGestion.service
         */
         public bool AgregarProductoVendido(ProductoVendidoDTO dto)
         {
-            ProductoVendido pv = ProductoVendidoMapper.MapearAProductoVendido(dto);
+            ProductoVendido pv = productoVendidoMapper.MapearAProductoVendido(dto);
+            EntityEntry<ProductoVendido>? resultado = this.context.ProductoVendidos.Add(pv);
 
-            context.ProductoVendidos.Add(pv);
-
+            resultado.State = EntityState.Added;
             context.SaveChanges();
             return true;
         }
@@ -153,7 +156,7 @@ namespace WebApiSistemaGestion.service
                                                                    .ToList();
 
             List<ProductoVendidoDTO> dto = productosVendidos
-                                           .Select(p => ProductoVendidoMapper.MapearADTO(p))
+                                           .Select(p => productoVendidoMapper.MapearADTO(p))
                                            .ToList();
             return dto;
         }

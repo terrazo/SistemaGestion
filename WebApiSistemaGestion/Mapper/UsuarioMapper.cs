@@ -3,10 +3,10 @@ using WebApiSistemaGestion.DTOs;
 
 namespace WebApiSistemaGestion.Mapper
 {
-    public static class UsuarioMapper
+    public class UsuarioMapper
     {
 
-        public static Usuario MapearAUsuario(UsuarioDTO dto)
+        public Usuario MapearAUsuario(UsuarioDTO dto)
         {
             Usuario u = new Usuario();
             u.Id = dto.Id;
@@ -19,7 +19,7 @@ namespace WebApiSistemaGestion.Mapper
             return u;
         }
 
-        public static UsuarioDTO MapearADTO(Usuario u)
+        public UsuarioDTO MapearADTO(Usuario u)
         {
             UsuarioDTO dto = new UsuarioDTO();
 

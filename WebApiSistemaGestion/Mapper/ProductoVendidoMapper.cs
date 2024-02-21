@@ -4,9 +4,9 @@ using WebApiSistemaGestion.DTOs;
 
 namespace WebApiSistemaGestion.Mapper
 {
-    public static class ProductoVendidoMapper
+    public class ProductoVendidoMapper
     {
-        public static ProductoVendido MapearAProductoVendido(ProductoVendidoDTO dto)
+        public ProductoVendido MapearAProductoVendido(ProductoVendidoDTO dto)
         {
             ProductoVendido producto = new ProductoVendido();
             producto.Id = dto.Id;
@@ -17,7 +17,7 @@ namespace WebApiSistemaGestion.Mapper
             return producto;
         }
 
-        public static ProductoVendidoDTO MapearADTO(ProductoVendido producto)
+        public ProductoVendidoDTO MapearADTO(ProductoVendido producto)
         {
             ProductoVendidoDTO dto = new ProductoVendidoDTO();
 

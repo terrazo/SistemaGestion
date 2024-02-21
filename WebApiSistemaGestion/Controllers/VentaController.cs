@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using WebApiSistemaGestion.DTOs;
 using WebApiSistemaGestion.models;
 using WebApiSistemaGestion.service;
@@ -48,6 +49,37 @@ namespace WebApiSistemaGestion.Controllers
                 return base.Conflict(new { mensaje = "No se agrego una Venta" });
             }
         }
+
+        [HttpPost("{idUsuario}")]
+        public IActionResult CrearVenta(int idUsuario, [FromBody] List<ProductoDTO> productos)
+        {
+            if (productos.Count == 0)
+            {
+                {
+                    return base.BadRequest(new
+                    {
+                        mensaje = "No se recibieron productos para generar la venta",
+                        status = HttpStatusCode.BadRequest
+                    });
+                }
+            }
+            try
+            {
+                ventaService.AgregarNuevaVenta(idUsuario, productos);
+                IActionResult result = base.Created(nameof(CrearVenta), new
+                {
+                    mensaje = "Venta realizada",
+                    status = HttpStatusCode.Created,
+                    nuevaVenta = productos
+                });
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return base.Conflict(new { message = ex.Message, status = HttpStatusCode.Conflict });
+            }
+        }
+
 
         [HttpDelete("{id}")]
         public IActionResult BorrarVenta(int id)

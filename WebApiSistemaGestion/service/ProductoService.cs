@@ -13,10 +13,12 @@ namespace WebApiSistemaGestion.service
     public class ProductoService
     {
         private CoderContext context;
+        private readonly ProductoMapper productoMapper;
 
-        public ProductoService(CoderContext coderContext)
+        public ProductoService(CoderContext coderContext, ProductoMapper productoMapper)
         {
             this.context = coderContext;
+            this.productoMapper = productoMapper;
         }
 
         public List<Producto> GetAllProducts()
@@ -43,16 +45,17 @@ namespace WebApiSistemaGestion.service
             return productos;
         }
 
-        public Producto ObtenerProductoPorId(int id)
+        public ProductoDTO ObtenerProductoPorId(int id)
         {
             Producto? productoBuscado = context.Productos.Where(p => p.Id == id).FirstOrDefault();
-            return productoBuscado;
+            ProductoDTO pdto = productoMapper.MapearADTO(productoBuscado);
+            return pdto;
         }
 
 
         public bool AgregarUnProducto(ProductoDTO dto)
         {
-            Producto p = ProductoMapper.MapearAProducto(dto);
+            Producto p = productoMapper.MapearAProducto(dto);
 
             this.context.Productos.Add(p);
             this.context.SaveChanges();

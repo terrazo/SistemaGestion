@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebApiSistemaGestion.database;
+using WebApiSistemaGestion.Mapper;
 using WebApiSistemaGestion.service;
 
 namespace WebApiSistemaGestion
@@ -18,11 +19,34 @@ namespace WebApiSistemaGestion
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+
             builder.Services.AddScoped<UsuarioService>();
             builder.Services.AddScoped<ProductoService>();
             builder.Services.AddScoped<ProductoVendidoService>();
             builder.Services.AddScoped<VentaService>();
 
+            builder.Services.AddScoped<UsuarioMapper>();
+            builder.Services.AddScoped<ProductoMapper>();
+            builder.Services.AddScoped<ProductoVendidoMapper>();
+            builder.Services.AddScoped<VentaMapper>();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                    policy.AllowAnyMethod();
+                });
+            });
+            
+            /*
+            builder.Services.AddExceptionHandler((options)=>
+            {
+                options.ExceptionHandler = new RequestDelegate(async(context))
+            })
+            */
 
             builder.Services.AddDbContext<CoderContext>(options =>
             {

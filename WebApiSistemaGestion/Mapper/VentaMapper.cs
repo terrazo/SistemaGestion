@@ -6,7 +6,7 @@ namespace WebApiSistemaGestion.Mapper
 {
     public class VentaMapper
     {
-        public static Venta MapearAVenta(VentaDTO dto)
+        public Venta MapearAVenta(VentaDTO dto)
         {
             Venta v = new Venta();
             v.Id = dto.Id;
@@ -16,7 +16,7 @@ namespace WebApiSistemaGestion.Mapper
             return v;
         }
 
-        public static VentaDTO MapearADTO(Venta v)
+        public VentaDTO MapearADTO(Venta v)
         {
             VentaDTO dto = new VentaDTO();
 
