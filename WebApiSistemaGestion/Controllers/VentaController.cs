@@ -34,7 +34,7 @@ namespace WebApiSistemaGestion.Controllers
 
         //////////////////////////////////////////////////////////////////////////////////////////
 
-
+        /*
         [HttpPost]
         public IActionResult AgregarVenta([FromBody] VentaDTO venta)
         {
@@ -49,6 +49,7 @@ namespace WebApiSistemaGestion.Controllers
                 return base.Conflict(new { mensaje = "No se agrego una Venta" });
             }
         }
+        */
 
         [HttpPost("{idUsuario}")]
         public IActionResult CrearVenta(int idUsuario, [FromBody] List<ProductoDTO> productos)

@@ -7,11 +7,14 @@ namespace WebApiSistemaGestion.Controllers
     [Route("api/[controller]")]
     public class NombreController : Controller
     {
-        List<string> list;
+        
+        /*List<string> list;
+       
         public NombreController()
         {
             this.list = new List<string>() { "Guillermo Terrazo", "CoderHouse", "C#" };
         }
+        */
 
         [HttpGet]
         public string ObtenerNombre()
@@ -25,13 +28,18 @@ namespace WebApiSistemaGestion.Controllers
         {
             return "Guillermo Terrazo";
         }
-        */
+        
 
         [HttpGet("listado")]
         public List<string> ObtenerListadoDeNombres()
         {
             return this.list;
         }
+        */
+
+
+        ////////////////////////
+        ///
 
         /*
         [HttpGet("listado/{id}")]

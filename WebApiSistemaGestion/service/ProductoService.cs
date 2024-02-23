@@ -64,26 +64,30 @@ namespace WebApiSistemaGestion.service
 
         public bool BorrarProductoPorId(int id)
         {
-            Producto? producto = this.context.Productos.Where(p => p.Id == id).FirstOrDefault();
-
-            if (producto is not null)
+            if (id > 0)
             {
-                List<ProductoVendido>? productoVendidos = context.ProductoVendidos.Where(p => p.IdProducto == id).ToList();
+                Producto? producto = this.context.Productos.Where(p => p.Id == id).FirstOrDefault();
 
-                if (productoVendidos.Count > 0)
+                if (producto is not null)
                 {
-                    foreach (ProductoVendido v in productoVendidos)
+                    List<ProductoVendido>? productoVendidos = context.ProductoVendidos.Where(p => p.IdProducto == id).ToList();
+
+                    if (productoVendidos.Count > 0)
                     {
-                        this.context.Remove(producto);
-                        this.context.SaveChanges();
+                        foreach (ProductoVendido v in productoVendidos)
+                        {
+                            this.context.Remove(v);
+                            this.context.SaveChanges();
+                        }
                     }
+
+                    this.context.Remove(producto);
+                    this.context.SaveChanges();
+                    return true;
                 }
 
-                this.context.Remove(producto);
-                this.context.SaveChanges();
-                return true;
+                return false;
             }
-
             return false;
         }
 

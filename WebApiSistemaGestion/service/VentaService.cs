@@ -64,7 +64,7 @@ namespace WebApiSistemaGestion.service
             }
             return null;
         }
-
+        /*
         public bool AgregarVenta(VentaDTO vDTO)
         {
 
@@ -75,6 +75,7 @@ namespace WebApiSistemaGestion.service
             context.SaveChanges();
             return true;
         }
+        */
 
         public bool AgregarNuevaVenta(int idUsuario, List<ProductoDTO> productosDTO)
         {

@@ -60,17 +60,12 @@ namespace WebApiSistemaGestion.Controllers
         [HttpDelete("{id}")]
         public IActionResult BorrarProducto(int id)
         {
-            if (id > 0)
-            {
                 if (this.productoService.BorrarProductoPorId(id))
                 {
                     return base.Ok(new { mensaje = "Producto borrado", status = 200 });
                 }
 
                 return base.Conflict(new { mensaje = "No se pudo borrar el producto" });
-
-            }
-            return base.BadRequest(new { status = 400, mensaje = "El id no puede ser negativo" });
         }
 
         [HttpPut("{id}")]

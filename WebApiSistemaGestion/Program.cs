@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using WebApiSistemaGestion.database;
 using WebApiSistemaGestion.Mapper;
 using WebApiSistemaGestion.service;
@@ -31,16 +32,18 @@ namespace WebApiSistemaGestion
             builder.Services.AddScoped<ProductoVendidoMapper>();
             builder.Services.AddScoped<VentaMapper>();
 
+
+
             builder.Services.AddCors(options =>
             {
                 options.AddDefaultPolicy(policy =>
                 {
+                    policy.AllowAnyMethod();
+                    policy.AllowAnyOrigin(); 
                     policy.AllowAnyHeader();
-                    policy.AllowAnyMethod();
-                    policy.AllowAnyMethod();
                 });
             });
-            
+
             /*
             builder.Services.AddExceptionHandler((options)=>
             {
@@ -56,6 +59,15 @@ namespace WebApiSistemaGestion
 
             });
 
+            //
+            /*
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
+            */
+            //
+
 
             var app = builder.Build();
 
@@ -66,12 +78,15 @@ namespace WebApiSistemaGestion
                 app.UseSwaggerUI();
             }
 
+
+            app.UseCors();
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
-
             app.MapControllers();
+
 
             app.Run();
         }
